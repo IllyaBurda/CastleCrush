@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -9,27 +10,28 @@ public class Player {
     int countCups;
     int experience;
     Castle myCastle;
+    final Hero[]
     List<Hero> heroArchive = new ArrayList<>();
     List<Hero> currentDeck = new ArrayList<>();
 
-    public boolean changeHeroInArchiveAndInCurrentDeck(String heroName, int heroDeckPosition) {
+    private boolean changeHeroInArchiveAndInCurrentDeck(String heroName, int heroDeckPosition) {
         boolean result = false;
         Hero hero = searchHeroInArchive(heroName);
         if (hero != null) {
             heroArchive.add(currentDeck.get(heroDeckPosition));
             currentDeck.remove(heroDeckPosition);
             currentDeck.set(heroDeckPosition, hero);
-            deleteHeroInArchive(hero);
+            deleteHeroInArchive(heroName);
             result = true;
         }
         return result;
     }
 
-    public boolean deleteHeroInArchive(Hero hero) {
-        return heroArchive.removeIf((w) -> w.name.equals(hero.name));
+    private boolean deleteHeroInArchive(String heroName) {
+        return heroArchive.remove(searchHeroInArchive(heroName));
     }
 
-    public Hero searchHeroInArchive(String name) {
+    private Hero searchHeroInArchive(String name) {
         Hero resultHero = null;
         for (Hero hero : heroArchive) {
             if (hero.name.equals(name)) {
@@ -39,17 +41,21 @@ public class Player {
         return resultHero;
     }
 
-    public boolean addHeroToDeck(String heroName) {
+    private boolean initializeDeck(Hero[] startDeck) {
         boolean result = false;
-        if (currentDeck.size() < 8) {
-            Hero choicedHero = searchHeroInArchive(heroName);
-            if (choicedHero != null) {
-                deleteHeroInArchive(choicedHero);
-                currentDeck.add(choicedHero);
-                result = true;
+        if (startDeck.length == 8) {
+            for (int i = 0; i < startDeck.length; i++) {
+                currentDeck.add(new Hero(startDeck[i]));
             }
+            result = true;
         }
         return result;
+    }
+
+    private boolean sendHeroToFight(Hero hero, Cell startHeroPoint) {
+        if (validatePosition() == true) {
+            hero.setPosion(startHeroPoint);
+        }
     }
 
     public Player(String name, int countCups, int experience, Castle myCastle) {

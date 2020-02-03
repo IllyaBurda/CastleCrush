@@ -4,6 +4,7 @@ public class Castle {
     int health;
     Armor armor;
     String urlImage;
+    final int CELL_COUNT = 10;
 
     public Castle(int health, Armor armor, String urlImage) {
         this.health = health;

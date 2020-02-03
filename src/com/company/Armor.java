@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Armor {
     String name;
     int damageRadius;
@@ -13,6 +15,14 @@ public class Armor {
         this.damageForce = damageForce;
         this.typeArmor = typeArmor;
         this.typeFrequencyOfAttack = typeFrequencyOfAttack;
+    }
+
+    public Armor(Armor armor) {
+        this.name = armor.name;
+        this.damageRadius = armor.damageRadius;
+        this.damageForce = armor.damageForce;
+        this.typeArmor = armor.typeArmor;
+        this.typeFrequencyOfAttack = armor.typeFrequencyOfAttack;
     }
 
     @Override

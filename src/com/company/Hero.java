@@ -9,9 +9,11 @@ public class Hero {
     int health;
     Armor armor;
     int speed;
+    int cellCount = 1;
     List<Cell> currentPosition = new ArrayList<>();
     int radiusOfVisibility;
     List<Hero> goalEnemyHeroes = new ArrayList<>();
+    final static Hero[] START_HEROES_IN_DECK = new Hero[8];
 
     public void moveTo(Cell cell) {
 
@@ -28,6 +30,15 @@ public class Hero {
         this.armor = armor;
         this.speed = speed;
         this.radiusOfVisibility = radiusOfVisibility;
+    }
+
+    public Hero(Hero hero) {
+        this.urlImage = hero.urlImage;
+        this.name = hero.name;
+        this.health = hero.health;
+        this.armor = new Armor(hero.armor);
+        this.speed = hero.speed;
+        this.radiusOfVisibility = hero.radiusOfVisibility;
     }
 
     @Override
