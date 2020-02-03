@@ -52,7 +52,7 @@ public class Player {
         return result;
     }
 
-    private boolean sendHeroToFight(Hero hero, Cell startHeroPoint) {
+    private boolean putHeroOnField(Hero hero, Cell startHeroPoint) {
         if (validatePosition() == true) {
             hero.setPosion(startHeroPoint);
         }
