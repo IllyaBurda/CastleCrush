@@ -9,17 +9,33 @@ public class Game {
     List<Cell> battlefield = new ArrayList<>();
     final int HEIGHT_BY_Y = 61;
     final int WIDTH_BY_X = 30;
+    StateGame stateGame = StateGame.EditState;
 
-    public Game(Player playerOne, Player playerTwo) {
+    public Game(Player playerOne) {
         for (int x = 0; x < 30; x++) {
             for (int y = 0; y < 61; y++) {
                 Cell cell = new Cell(x, y);
                 setCastlesAndDitch(cell);
             }
         }
-
         this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+        this.playerTwo = searchEnemyInGame(playerOne);
+
+
+    }
+
+    private Player searchEnemyInGame(Player playerOne) {
+        return new Player("John", 0, 0, null);
+    }
+
+    public Player getLinkOnEnemy(Player player) {
+        Player result = null;
+        if (player == playerOne) {
+            result = playerTwo;
+        } else {
+            result = playerOne;
+        }
+        return result;
     }
 
     public void setCastlesAndDitch(Cell cell) {

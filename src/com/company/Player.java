@@ -10,9 +10,21 @@ public class Player {
     int countCups;
     int experience;
     Castle myCastle;
-    final Hero[]
+    final static List<Hero> startDeck = new ArrayList();
     List<Hero> heroArchive = new ArrayList<>();
     List<Hero> currentDeck = new ArrayList<>();
+
+    static {
+        startDeck.add(new Hero("Bug"));
+        startDeck.add(new Hero("Bug1"));
+        startDeck.add(new Hero("Bug2"));
+        startDeck.add(new Hero("Bug3"));
+        startDeck.add(new Hero("Bug4"));
+        startDeck.add(new Hero("Bug5"));
+        startDeck.add(new Hero("Bug6"));
+        startDeck.add(new Hero("Bug7"));
+
+    }
 
     private boolean changeHeroInArchiveAndInCurrentDeck(String heroName, int heroDeckPosition) {
         boolean result = false;
@@ -29,6 +41,17 @@ public class Player {
 
     private boolean deleteHeroInArchive(String heroName) {
         return heroArchive.remove(searchHeroInArchive(heroName));
+    }
+
+    public List<Hero> returnListEnemy(Game game) {
+        List<Hero> result = new ArrayList<>();
+        Player enemy = game.getLinkOnEnemy(this);
+        for (Hero hero : enemy.currentDeck) {
+            if (hero.currentPosition.size() > 0) {
+                result.add(hero);
+            }
+        }
+        return result;
     }
 
     private Hero searchHeroInArchive(String name) {
@@ -52,13 +75,26 @@ public class Player {
         return result;
     }
 
-    private boolean putHeroOnField(Hero hero, Cell startHeroPoint) {
+    private boolean putHeroOnField(Hero hero, int x, int y, Game currentGame) {
+        boolean result = false;
         if (validatePosition() == true) {
-            hero.setPosion(startHeroPoint);
+            hero.setPosion(x, y, currentGame);
+            result = true;
         }
+        return result;
+    }
+
+    private boolean validatePosition() {
+
+        return true;
     }
 
     public Player(String name, int countCups, int experience, Castle myCastle) {
+        if (countCups == 0 && experience == 0) {
+            for (Hero hero : startDeck) {
+                currentDeck.add(new Hero(hero));
+            }
+        }
         this.name = name;
         this.countCups = countCups;
         this.experience = experience;

@@ -9,7 +9,8 @@ public class Hero {
     int health;
     Armor armor;
     int speed;
-    int cellCount = 1;
+    int sizeHero;
+
     List<Cell> currentPosition = new ArrayList<>();
     int radiusOfVisibility;
     List<Hero> goalEnemyHeroes = new ArrayList<>();
@@ -23,13 +24,29 @@ public class Hero {
 
     }
 
-    public Hero(String urlImage, String name, int health, Armor armor, int speed, int radiusOfVisibility) {
+    public Hero choiceEnemy(Game game, Player player) {
+        Hero result = null;
+        List<Hero> listEnemy = player.returnListEnemy(game);
+        for (Hero hero : listEnemy) {
+            if (hero.currentPosition.get(0).x == this.currentPosition.get(0).x) {
+                result = hero;
+            }
+        }
+        return result;
+    }
+
+    public Hero(String urlImage, String name, int health, Armor armor, int speed, int sizeHero, int radiusOfVisibility) {
         this.urlImage = urlImage;
         this.name = name;
         this.health = health;
         this.armor = armor;
         this.speed = speed;
+        this.sizeHero = sizeHero;
         this.radiusOfVisibility = radiusOfVisibility;
+    }
+
+    public Hero(String name) {
+        this.name = name;
     }
 
     public Hero(Hero hero) {
@@ -51,5 +68,24 @@ public class Hero {
                 ", radiusOfVisibility=" + radiusOfVisibility +
                 ", goalEnemyHeroes=" + goalEnemyHeroes +
                 '}';
+    }
+
+    public void setPosion(int x, int y, Game currentGame) {
+        for (Cell cell : currentGame.battlefield) {
+            boolean startPosition = cell.y == y && cell.x == x;
+            if (startPosition) {
+                currentPosition.add(cell);
+            }
+            if (y == currentGame.HEIGHT_BY_Y / 2) {
+                if ((cell.y == y - 1 && cell.x == x)) {
+                    currentPosition.add(cell);
+                }
+            } else {
+                if ((cell.y == y + 1 && cell.x == x)) {
+                    currentPosition.add(cell);
+                }
+            }
+        }
+
     }
 }
