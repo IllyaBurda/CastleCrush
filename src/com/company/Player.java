@@ -1,9 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Player {
     String name;
@@ -15,15 +13,30 @@ public class Player {
     List<Hero> currentDeck = new ArrayList<>();
 
     static {
-        startDeck.add(new Hero("Bug"));
-        startDeck.add(new Hero("Bug1"));
-        startDeck.add(new Hero("Bug2"));
-        startDeck.add(new Hero("Bug3"));
-        startDeck.add(new Hero("Bug4"));
-        startDeck.add(new Hero("Bug5"));
-        startDeck.add(new Hero("Bug6"));
-        startDeck.add(new Hero("Bug7"));
+        Armor armor3 = new Armor("folk", 3, 10, TypeArmor.single, TypeFrequency.low);
+        startDeck.add(new Hero(null, "Bug1", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug2", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug3", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug4", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug5", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug6", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug7", 100, new Armor(armor3), 20, 2, 3));
+        startDeck.add(new Hero(null, "Bug8", 100, new Armor(armor3), 20, 2, 3));
 
+
+    }
+
+    public Player(String name, int countCups, int experience, Castle myCastle) {
+        if (countCups == 0 && experience == 0) {
+            for (Hero hero : startDeck) {
+                currentDeck.add(new Hero(hero));
+            }
+        }
+        this.name = name;
+        this.countCups = countCups;
+        this.experience = experience;
+        this.myCastle = myCastle;
+        System.out.println(currentDeck);
     }
 
     private boolean changeHeroInArchiveAndInCurrentDeck(String heroName, int heroDeckPosition) {
@@ -78,7 +91,7 @@ public class Player {
     private boolean putHeroOnField(Hero hero, int x, int y, Game currentGame) {
         boolean result = false;
         if (validatePosition() == true) {
-            hero.setPosion(x, y, currentGame);
+            hero.setPositon(x, y, currentGame);
             result = true;
         }
         return result;
@@ -89,17 +102,6 @@ public class Player {
         return true;
     }
 
-    public Player(String name, int countCups, int experience, Castle myCastle) {
-        if (countCups == 0 && experience == 0) {
-            for (Hero hero : startDeck) {
-                currentDeck.add(new Hero(hero));
-            }
-        }
-        this.name = name;
-        this.countCups = countCups;
-        this.experience = experience;
-        this.myCastle = myCastle;
-    }
 
     @Override
     public String toString() {

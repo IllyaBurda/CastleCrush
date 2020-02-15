@@ -42,5 +42,11 @@ enum TypeArmor {
 }
 
 enum TypeFrequency {
-    low, middle, high
+    low(750), middle(500), high(250);
+    int timeSleep;
+
+    TypeFrequency(int timeSleep) {
+        this.timeSleep = timeSleep;
+    }
+
 }

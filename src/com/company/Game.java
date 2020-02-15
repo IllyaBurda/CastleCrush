@@ -18,14 +18,17 @@ public class Game {
                 setCastlesAndDitch(cell);
             }
         }
+
         this.playerOne = playerOne;
         this.playerTwo = searchEnemyInGame(playerOne);
-
-
+        this.playerOne.currentDeck.get(0).setPositon(2, 2, this);
+        playerTwo.currentDeck.get(0).setPositon(2, 2, this);
+        this.playerOne.currentDeck.get(0).fight(playerTwo.currentDeck.get(0));
     }
 
     private Player searchEnemyInGame(Player playerOne) {
-        return new Player("John", 0, 0, null);
+        Armor armor2 = new Armor("Sword", 3, 20, TypeArmor.splash, TypeFrequency.low);
+        return new Player("John", 0, 0, new Castle(1000, armor2, ""));
     }
 
     public Player getLinkOnEnemy(Player player) {

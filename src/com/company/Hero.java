@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Hero {
     String urlImage;
@@ -16,11 +17,32 @@ public class Hero {
     List<Hero> goalEnemyHeroes = new ArrayList<>();
     final static Hero[] START_HEROES_IN_DECK = new Hero[8];
 
-    public void moveTo(Cell cell) {
+    public void moveTo(int targetY) {
+        while (currentPosition.get(0).y < targetY) {
+            if (Math.abs(targetY - this.currentPosition.get(0).y) < 2) {
+                currentPosition.get(0).y += 1;
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1000 / speed);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void moveTo() {
 
     }
 
     public void fight(Hero hero) {
+        while (this.health > 0 || hero.health > 0) {
+            hero.health -= armor.damageForce;
+            try {
+                TimeUnit.MILLISECONDS.sleep(armor.typeFrequencyOfAttack.timeSleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
@@ -70,7 +92,7 @@ public class Hero {
                 '}';
     }
 
-    public void setPosion(int x, int y, Game currentGame) {
+    public void setPositon(int x, int y, Game currentGame) {
         for (Cell cell : currentGame.battlefield) {
             boolean startPosition = cell.y == y && cell.x == x;
             if (startPosition) {
